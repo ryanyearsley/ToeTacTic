@@ -26,6 +26,7 @@ public class TicTacToeGameManager : MonoBehaviour
 
 
 	public event Action<GameState> changeGameStateEvent;
+	public event Action<TicTacToeTurn> ticTacToeTurnEvent;
 
 	private GameState currentGameState = GameState.MENU;
 	private string[,] currentBoard;
@@ -63,6 +64,8 @@ public class TicTacToeGameManager : MonoBehaviour
 	}
 	public Player OnGameTileClick(Vector2Int tileCoordinate)
 	{
+		TicTacToeTurn turn = new TicTacToeTurn(currentPlayerTurn, tileCoordinate);
+		ticTacToeTurnEvent?.Invoke(turn);
 		Player output = currentPlayerTurn;
 		currentBoard [tileCoordinate.x, tileCoordinate.y] = currentPlayerTurn.ToString();
 		currentPlayerTurn = currentPlayerTurn == Player.X ? Player.O : Player.X;
