@@ -8,6 +8,10 @@ public class TicTacToeSubscriberComponent : MonoBehaviour
 	{
 		SubscribeToEvents();
 	}
+	private void OnDestroy()
+	{
+		UnsubscribeFromEvents();
+	}
 	protected virtual void SubscribeToEvents()
 	{
 		if (TicTacToeGameManager.instance != null)
@@ -16,6 +20,16 @@ public class TicTacToeSubscriberComponent : MonoBehaviour
 			TicTacToeGameManager.instance.changeGameStateEvent += OnChangeGameState;
 			TicTacToeGameManager.instance.ticTacToeUpdateEvent += OnUpdateTicTacToeBoard;
 			TicTacToeGameManager.instance.endPlayerTurnEvent += OnEndPlayerTurn;
+		}
+	}
+	protected virtual void UnsubscribeFromEvents()
+	{
+		if (TicTacToeGameManager.instance != null)
+		{
+			Debug.Log("TTTSubComp: Subscribing to events.");
+			TicTacToeGameManager.instance.changeGameStateEvent -= OnChangeGameState;
+			TicTacToeGameManager.instance.ticTacToeUpdateEvent -= OnUpdateTicTacToeBoard;
+			TicTacToeGameManager.instance.endPlayerTurnEvent -= OnEndPlayerTurn;
 		}
 	}
 	protected virtual void OnChangeGameState(GameState gameState)
