@@ -2107,7 +2107,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbcfc607e593b5e45a9cbdec00b8a498, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  winnerDisplayText: {fileID: 100543442}
+  messageDisplayText: {fileID: 100543442}
 --- !u!1 &1781664466
 GameObject:
   m_ObjectHideFlags: 0
