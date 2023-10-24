@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TTTCornholeBagComponent : MonoBehaviour
+public class TTTCornholeBagComponent : TicTacToeSubscriberComponent
 {
     private Player player;
 
@@ -15,7 +15,11 @@ public class TTTCornholeBagComponent : MonoBehaviour
     private Material playerXMaterial;
     [SerializeField]
     private Material playerOMaterial;
-
+    protected override void OnChangeGameState(GameState gameState)
+    {
+        if (gameState == GameState.POST_GAME)
+            Destroy(this.gameObject);
+    }
     public void SetPlayer(Player player)
     {
         this.player = player;
