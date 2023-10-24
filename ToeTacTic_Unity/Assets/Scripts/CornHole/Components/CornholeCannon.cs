@@ -1,6 +1,6 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 
 public class CornholeCannon : TicTacToeSubscriberComponent
 {
@@ -32,7 +32,7 @@ public class CornholeCannon : TicTacToeSubscriberComponent
 		if (gameState == GameState.GAME)
 		{
 			horizontalPivotTransform.localRotation = Quaternion.Euler(0, 0, 0);
-			verticalPivotTransform.localRotation = Quaternion.Euler(0, 0, 0); 
+			verticalPivotTransform.localRotation = Quaternion.Euler(0, 0, 0);
 			float angleFillAmount = 1 - ((0 - minVerticalAngle) / (maxVerticalAngle - minVerticalAngle));
 			angleIndicatorFill.fillAmount = angleFillAmount;
 			forceIndicatorFill.fillAmount = 0;
@@ -43,12 +43,14 @@ public class CornholeCannon : TicTacToeSubscriberComponent
 			isCannonLocked = true;
 		}
 	}
+
 	protected override void OnEndPlayerTurn(Player player)
 	{
 		isCannonLocked = false;
+		currentCannonForce = minCannonForce;
 	}
 
-	void Update()
+	private void Update()
 	{
 		if (!isCannonLocked)
 		{
@@ -70,7 +72,7 @@ public class CornholeCannon : TicTacToeSubscriberComponent
 		}
 	}
 
-	void RotateCannon()
+	private void RotateCannon()
 	{
 		//Horizontal
 		float horizontalInput = Input.GetAxis("Horizontal") * rotateSpeed * Time.deltaTime;
@@ -86,13 +88,14 @@ public class CornholeCannon : TicTacToeSubscriberComponent
 		float angleFillAmount = 1 - ((xRotation - minVerticalAngle) / (maxVerticalAngle - minVerticalAngle));
 		angleIndicatorFill.fillAmount = angleFillAmount;
 	}
-	void StartCharging()
+
+	private void StartCharging()
 	{
 		isCharging = true;
 		currentCannonForce = minCannonForce;
 	}
 
-	void ChargeCannon()
+	private void ChargeCannon()
 	{
 		currentCannonForce += forceIncreaseRate * Time.deltaTime;
 		currentCannonForce = Mathf.Clamp(currentCannonForce, minCannonForce, maxCannonForce);
@@ -103,7 +106,7 @@ public class CornholeCannon : TicTacToeSubscriberComponent
 		forceIndicatorFill.fillAmount = chargeFillAmount;
 	}
 
-	void ShootCannon()
+	private void ShootCannon()
 	{
 		isCharging = false;
 		// Create a new instance of the projectile prefab
@@ -136,5 +139,4 @@ public class CornholeCannon : TicTacToeSubscriberComponent
 			TicTacToeGameManager.instance.CheckForWinner();
 		}
 	}
-
 }
