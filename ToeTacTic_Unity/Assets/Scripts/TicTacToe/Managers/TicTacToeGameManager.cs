@@ -32,12 +32,12 @@ public class TicTacToeGameManager : MonoBehaviour
 	private Player currentPlayerTurn;
 
 	[SerializeField]
-	private TMP_Text winnerDisplayText;
+	private TMP_Text messageDisplayText;
 
 	private void Awake()
 	{
 		SingletonInitialization();
-		winnerDisplayText.text = "";
+		messageDisplayText.text = "";
 	}
 
 	public GameState GetGameState()
@@ -59,14 +59,14 @@ public class TicTacToeGameManager : MonoBehaviour
 		ChangeGameState(GameState.GAME);
 		currentBoard = new string[3, 3];
 		currentPlayerTurn = Player.X;
-		winnerDisplayText.text = currentPlayerTurn.ToString() + "'s Turn";
+		messageDisplayText.text = currentPlayerTurn.ToString() + "'s Turn";
 	}
 	public Player OnGameTileClick(Vector2Int tileCoordinate)
 	{
 		Player output = currentPlayerTurn;
 		currentBoard [tileCoordinate.x, tileCoordinate.y] = currentPlayerTurn.ToString();
 		currentPlayerTurn = currentPlayerTurn == Player.X ? Player.O : Player.X;
-		winnerDisplayText.text = currentPlayerTurn.ToString() + "'s Turn";
+		messageDisplayText.text = currentPlayerTurn.ToString() + "'s Turn";
 		String winner = TicTacToeUtility.CheckForWinner(currentBoard);
 		if (winner != null)
 		{
@@ -77,10 +77,10 @@ public class TicTacToeGameManager : MonoBehaviour
 
 	public IEnumerator GameOverRoutine (string gameOverDisplayText)
 	{
-		winnerDisplayText.text = "Winner: " + gameOverDisplayText;
+		messageDisplayText.text = "Winner: " + gameOverDisplayText;
 		ChangeGameState(GameState.POST_GAME);
 		yield return new WaitForSeconds(5);
-		winnerDisplayText.text = "";
+		messageDisplayText.text = "";
 		ChangeGameState(GameState.MENU);
 	}
 }
