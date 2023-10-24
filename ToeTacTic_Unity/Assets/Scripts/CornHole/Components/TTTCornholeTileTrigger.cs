@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,10 +5,13 @@ public class TTTCornholeTileTrigger : TicTacToeSubscriberComponent
 {
 	[SerializeField]
 	private Vector2Int tileCoordinate;
+
 	[SerializeField]
 	private Material neutralMaterial;
+
 	[SerializeField]
 	private Material xMaterial;
+
 	[SerializeField]
 	private Material oMaterial;
 
@@ -52,6 +54,7 @@ public class TTTCornholeTileTrigger : TicTacToeSubscriberComponent
 		}
 		CalculateWinningOccupant();
 	}
+
 	public void OnTriggerExit(Collider other)
 	{
 		Debug.Log("TileTrigger: TriggerExit Detected!");

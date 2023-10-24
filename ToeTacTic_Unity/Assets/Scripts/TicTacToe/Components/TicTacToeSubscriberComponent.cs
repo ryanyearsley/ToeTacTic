@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TicTacToeSubscriberComponent : MonoBehaviour
@@ -8,10 +6,12 @@ public class TicTacToeSubscriberComponent : MonoBehaviour
 	{
 		SubscribeToEvents();
 	}
+
 	private void OnDestroy()
 	{
 		UnsubscribeFromEvents();
 	}
+
 	protected virtual void SubscribeToEvents()
 	{
 		if (TicTacToeGameManager.instance != null)
@@ -22,6 +22,7 @@ public class TicTacToeSubscriberComponent : MonoBehaviour
 			TicTacToeGameManager.instance.endPlayerTurnEvent += OnEndPlayerTurn;
 		}
 	}
+
 	protected virtual void UnsubscribeFromEvents()
 	{
 		if (TicTacToeGameManager.instance != null)
@@ -32,17 +33,16 @@ public class TicTacToeSubscriberComponent : MonoBehaviour
 			TicTacToeGameManager.instance.endPlayerTurnEvent -= OnEndPlayerTurn;
 		}
 	}
+
 	protected virtual void OnChangeGameState(GameState gameState)
 	{
-
 	}
+
 	protected virtual void OnUpdateTicTacToeBoard(TicTacToeTurn turn)
 	{
-
 	}
+
 	protected virtual void OnEndPlayerTurn(Player player)
 	{
-
 	}
-
 }
