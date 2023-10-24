@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TTTCornholeTileTrigger : MonoBehaviour
+public class TTTCornholeTileTrigger : TicTacToeSubscriberComponent
 {
 	[SerializeField]
 	private Vector2Int tileCoordinate;
@@ -23,6 +23,15 @@ public class TTTCornholeTileTrigger : MonoBehaviour
 		_renderer = transform.parent.GetComponent<Renderer>();
 		_renderer.material = neutralMaterial;
 		currentOccupyingPlayer = Player.EMPTY;
+	}
+
+	protected override void OnChangeGameState(GameState gameState)
+	{
+		if (gameState == GameState.MENU)
+		{
+			_renderer.material = neutralMaterial;
+			currentOccupyingPlayer = Player.EMPTY;
+		}
 	}
 
 	public void OnTriggerEnter(Collider other)
