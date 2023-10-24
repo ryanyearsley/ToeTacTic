@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/TicTacToe_Cornhole.unity
+    guid: 5c809bf2061be524b8ee86266b3ad2f9
   m_configObjects: {}
