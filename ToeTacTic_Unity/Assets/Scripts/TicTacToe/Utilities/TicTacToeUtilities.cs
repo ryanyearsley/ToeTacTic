@@ -36,7 +36,7 @@ public class TicTacToeUtility : MonoBehaviour
 		{
 			for (int y = 0; y < board.GetLength(1); y++)
 			{
-				if (string.IsNullOrEmpty(board[x,y]))
+				if (string.IsNullOrEmpty(board[x, y]))
 				{
 					isDraw = false;
 				}

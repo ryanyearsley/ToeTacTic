@@ -1,10 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class StartGameButtonClick : AbstractButtonClick
 {
-
 	public override void OnClick()
 	{
 		if (TicTacToeGameManager.instance != null)
@@ -12,5 +7,4 @@ public class StartGameButtonClick : AbstractButtonClick
 			TicTacToeGameManager.instance.StartGame();
 		}
 	}
-
 }

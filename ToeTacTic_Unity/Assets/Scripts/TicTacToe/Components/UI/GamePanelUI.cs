@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GamePanelUI : AbstractPanelUI
@@ -12,10 +10,12 @@ public class GamePanelUI : AbstractPanelUI
 		tileButtons = GetComponentsInChildren<TicTacToeTileButton>();
 		base.InitializePanel();
 	}
+
 	protected override void OnUIChange(GameState gameState)
 	{
 		base.OnUIChange(gameState);
-		if (gameState == GameState.GAME) {
+		if (gameState == GameState.GAME)
+		{
 			Debug.Log("GamePanelUI: Activating Game Panel, clearing tile buttons");
 			foreach (TicTacToeTileButton tile in tileButtons)
 			{
