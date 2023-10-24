@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
 public class TicTacToeGameManager : MonoBehaviour
 {
@@ -23,10 +23,10 @@ public class TicTacToeGameManager : MonoBehaviour
 
 	#endregion Singleton
 
-
-
 	public event Action<GameState> changeGameStateEvent;
+
 	public event Action<TicTacToeTurn> ticTacToeUpdateEvent;
+
 	public event Action<Player> endPlayerTurnEvent;
 
 	private GameState currentGameState = GameState.MENU;
@@ -46,6 +46,7 @@ public class TicTacToeGameManager : MonoBehaviour
 	{
 		return currentGameState;
 	}
+
 	public Player GetCurrentPlayerTurn()
 	{
 		return currentPlayerTurn;
@@ -65,8 +66,9 @@ public class TicTacToeGameManager : MonoBehaviour
 		ChangeGameState(GameState.GAME);
 		currentBoard = new string[3, 3];
 		currentPlayerTurn = Player.X;
-		messageDisplayText.text = currentPlayerTurn.ToString() + "'s Turn";
+		UpdatePlayerTurnDisplay(currentPlayerTurn);
 	}
+
 	public void UpdateBoard(Player player, Vector2Int tileCoordinate)
 	{
 		TicTacToeTurn turn = new TicTacToeTurn(player, tileCoordinate);
@@ -76,14 +78,22 @@ public class TicTacToeGameManager : MonoBehaviour
 		{
 			updateValue = player.ToString();
 		}
-		currentBoard [tileCoordinate.x, tileCoordinate.y] = updateValue;
+		currentBoard[tileCoordinate.x, tileCoordinate.y] = updateValue;
 	}
 
-	public void EndPlayerTurn (Player player)
+	public void EndPlayerTurn(Player player)
 	{
 		endPlayerTurnEvent?.Invoke(player);
 		currentPlayerTurn = player == Player.X ? Player.O : Player.X;
-		messageDisplayText.text = currentPlayerTurn.ToString() + "'s Turn";
+		UpdatePlayerTurnDisplay(currentPlayerTurn);
+	}
+
+	private void UpdatePlayerTurnDisplay (Player player)
+	{
+		Color playerColor = player == Player.X ? Color.blue : Color.red;
+		string playerColorName = player == Player.X ? "Blue" : "Red";
+		messageDisplayText.color = playerColor;
+		messageDisplayText.text = playerColorName + "'s Turn";
 	}
 
 	public void CheckForWinner()
@@ -95,10 +105,21 @@ public class TicTacToeGameManager : MonoBehaviour
 		}
 	}
 
-
-	public IEnumerator GameOverRoutine (string gameOverDisplayText)
+	public IEnumerator GameOverRoutine(string gameOverDisplayText)
 	{
-		messageDisplayText.text = "Winner: " + gameOverDisplayText;
+		messageDisplayText.color = Color.gray;
+		if (gameOverDisplayText != "DRAW")
+		{
+			string playerColorName = gameOverDisplayText == "X" ? "Blue" : "Red";
+			Color playerColor = gameOverDisplayText == "X" ? Color.blue : Color.red;
+			messageDisplayText.text = "Winner: " + playerColorName;
+			messageDisplayText.color = playerColor;
+		}
+		else
+		{
+			messageDisplayText.text = "DRAW";
+			messageDisplayText.color = Color.white;
+		}
 		ChangeGameState(GameState.POST_GAME);
 		yield return new WaitForSeconds(5);
 		messageDisplayText.text = "";
