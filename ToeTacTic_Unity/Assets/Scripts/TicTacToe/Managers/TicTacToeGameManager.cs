@@ -26,7 +26,8 @@ public class TicTacToeGameManager : MonoBehaviour
 
 
 	public event Action<GameState> changeGameStateEvent;
-	public event Action<TicTacToeTurn> ticTacToeTurnEvent;
+	public event Action<TicTacToeTurn> ticTacToeUpdateEvent;
+	public event Action<Player> endPlayerTurnEvent;
 
 	private GameState currentGameState = GameState.MENU;
 	private string[,] currentBoard;
@@ -45,6 +46,10 @@ public class TicTacToeGameManager : MonoBehaviour
 	{
 		return currentGameState;
 	}
+	public Player GetCurrentPlayerTurn()
+	{
+		return currentPlayerTurn;
+	}
 
 	public void ChangeGameState(GameState newGameState)
 	{
@@ -62,21 +67,34 @@ public class TicTacToeGameManager : MonoBehaviour
 		currentPlayerTurn = Player.X;
 		messageDisplayText.text = currentPlayerTurn.ToString() + "'s Turn";
 	}
-	public Player OnGameTileClick(Vector2Int tileCoordinate)
+	public void UpdateBoard(Player player, Vector2Int tileCoordinate)
 	{
-		TicTacToeTurn turn = new TicTacToeTurn(currentPlayerTurn, tileCoordinate);
-		ticTacToeTurnEvent?.Invoke(turn);
-		Player output = currentPlayerTurn;
-		currentBoard [tileCoordinate.x, tileCoordinate.y] = currentPlayerTurn.ToString();
-		currentPlayerTurn = currentPlayerTurn == Player.X ? Player.O : Player.X;
+		TicTacToeTurn turn = new TicTacToeTurn(player, tileCoordinate);
+		ticTacToeUpdateEvent?.Invoke(turn);
+		string updateValue = "";
+		if (player != Player.EMPTY)
+		{
+			updateValue = player.ToString();
+		}
+		currentBoard [tileCoordinate.x, tileCoordinate.y] = updateValue;
+	}
+
+	public void EndPlayerTurn (Player player)
+	{
+		endPlayerTurnEvent?.Invoke(player);
+		currentPlayerTurn = player == Player.X ? Player.O : Player.X;
 		messageDisplayText.text = currentPlayerTurn.ToString() + "'s Turn";
+	}
+
+	public void CheckForWinner()
+	{
 		String winner = TicTacToeUtility.CheckForWinner(currentBoard);
 		if (winner != null)
 		{
 			StartCoroutine(GameOverRoutine(winner));
 		}
-		return output;
 	}
+
 
 	public IEnumerator GameOverRoutine (string gameOverDisplayText)
 	{

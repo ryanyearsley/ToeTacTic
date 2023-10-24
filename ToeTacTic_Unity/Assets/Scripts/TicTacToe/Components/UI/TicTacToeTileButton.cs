@@ -31,9 +31,12 @@ public class TicTacToeTileButton : AbstractButtonClick
 	{
 		if (isVacant == true && TicTacToeGameManager.instance != null  && TicTacToeGameManager.instance.GetGameState() == GameState.GAME)
 		{
-			Player player = TicTacToeGameManager.instance.OnGameTileClick(tileCoordinate);
-			tileImage.sprite = player == Player.X ? xSprite : ySprite;
+			Player currentPlayer = TicTacToeGameManager.instance.GetCurrentPlayerTurn();
+			TicTacToeGameManager.instance.UpdateBoard(currentPlayer, tileCoordinate);
+			tileImage.sprite = currentPlayer == Player.X ? xSprite : ySprite;
 			isVacant = false;
+			TicTacToeGameManager.instance.EndPlayerTurn(currentPlayer);
+			TicTacToeGameManager.instance.CheckForWinner();
 		}
 	}
 }
