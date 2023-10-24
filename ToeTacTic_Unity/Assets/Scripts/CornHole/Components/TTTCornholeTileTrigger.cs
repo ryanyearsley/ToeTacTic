@@ -32,6 +32,11 @@ public class TTTCornholeTileTrigger : TicTacToeSubscriberComponent
 			_renderer.material = neutralMaterial;
 			currentOccupyingPlayer = Player.EMPTY;
 		}
+		else if (gameState == GameState.POST_GAME)
+		{
+			xOccupants.Clear();
+			oOccupants.Clear();
+		}
 	}
 
 	public void OnTriggerEnter(Collider other)
