@@ -17,7 +17,7 @@ public class TTTCornholeBagComponent : TicTacToeSubscriberComponent
     private Material playerOMaterial;
     protected override void OnChangeGameState(GameState gameState)
     {
-        if (gameState == GameState.POST_GAME)
+        if (gameState == GameState.MENU)
             Destroy(this.gameObject);
     }
     public void SetPlayer(Player player)
