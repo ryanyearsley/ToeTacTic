@@ -27,15 +27,15 @@ public class CornholeCannon : TicTacToeSubscriberComponent
 	private float xRotation = 0f;
 	private float yRotation = 0f;
 
-	private void Awake()
-	{
-
-	}
-
 	protected override void OnChangeGameState(GameState gameState)
 	{
 		if (gameState == GameState.GAME)
 		{
+			horizontalPivotTransform.localRotation = Quaternion.Euler(0, 0, 0);
+			verticalPivotTransform.localRotation = Quaternion.Euler(0, 0, 0); 
+			float angleFillAmount = 1 - ((0 - minVerticalAngle) / (maxVerticalAngle - minVerticalAngle));
+			angleIndicatorFill.fillAmount = angleFillAmount;
+			forceIndicatorFill.fillAmount = 0;
 			isCannonLocked = false;
 		}
 		else if (gameState == GameState.POST_GAME)
@@ -129,6 +129,7 @@ public class CornholeCannon : TicTacToeSubscriberComponent
 	{
 		isCannonLocked = true;
 		yield return new WaitForSeconds(5);
+		forceIndicatorFill.fillAmount = 0;
 		if (TicTacToeGameManager.instance != null)
 		{
 			TicTacToeGameManager.instance.EndPlayerTurn(TicTacToeGameManager.instance.GetCurrentPlayerTurn());
